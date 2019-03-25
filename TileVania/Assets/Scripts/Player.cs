@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
@@ -9,8 +10,10 @@ public class Player : MonoBehaviour
     [SerializeField] private float runSpeed = 5f;
     [SerializeField] private float jumpSpeed = 10f;
     [SerializeField] private float climbSpeed = 2f;
+    [SerializeField] private Vector2 deathKick = new Vector2(5f, 25f);
 
     // State
+    bool isAlive = true;
 
     // Cached component references
     Rigidbody2D rigibody;
@@ -53,10 +56,17 @@ public class Player : MonoBehaviour
             Debug.LogWarning("Update isn't being called: an error has been detected");
             return;
         }
+
+        if (!isAlive)
+        {
+            return;
+        }
+
         Run();
         Jump();
         ClimbLadder();
         FlipSprite();
+        Die();
     }
 
     private void Run()
@@ -82,7 +92,7 @@ public class Player : MonoBehaviour
 
     private void ClimbLadder()
     {
-        bool playerIsOnLadder = boxCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
+        bool playerIsOnLadder = capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ladder"));
 
         if (playerIsOnLadder)
         {
@@ -111,5 +121,16 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector2(Mathf.Sign(rigibody.velocity.x), 1f);
         }
     }
+
+    private void Die()
+    {
+        if (capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazards")))
+        {
+            isAlive = false;
+            animator.SetTrigger("Dying");
+            rigibody.velocity = deathKick;
+        }
+    }
+
 
 }

@@ -7,7 +7,6 @@ public class EnemyMovement : MonoBehaviour
 {
     float moveSpeed = 0.5f;
     Rigidbody2D rigibody;
-    private bool moveRight = true;
 
     void Start()
     {

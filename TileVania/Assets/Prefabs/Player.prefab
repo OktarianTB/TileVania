@@ -90,7 +90,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 84458559
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300010, guid: 7bdef750b6337244e86d72b74ff4d2eb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -155,6 +155,7 @@ MonoBehaviour:
   runSpeed: 5
   jumpSpeed: 14
   climbSpeed: 5
+  deathKick: {x: 5, y: 15}
 --- !u!61 &5542857965808061812
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -164,8 +165,8 @@ BoxCollider2D:
   m_GameObject: {fileID: 4093417505835332710}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_Material: {fileID: 6200000, guid: 58acf3cabc14e9a4aa1ad2f6240f6f03, type: 2}
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.4}
