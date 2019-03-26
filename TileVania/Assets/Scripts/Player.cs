@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     Animator animator;
     CapsuleCollider2D capsuleCollider;
     BoxCollider2D boxCollider;
+    GameSession gameSession;
     private float initialGravity;
 
     void Start()
@@ -129,8 +130,22 @@ public class Player : MonoBehaviour
             isAlive = false;
             animator.SetTrigger("Dying");
             rigibody.velocity = deathKick;
+
+            gameSession = FindObjectOfType<GameSession>();
+            if (!gameSession)
+            {
+                Debug.LogWarning("Game Session object type hasn't been found");
+                return;
+            }
+
+            StartCoroutine(WaitUntilDamageProcess());
         }
     }
 
+    IEnumerator WaitUntilDamageProcess()
+    {
+        yield return new WaitForSeconds(2);
+        gameSession.ProcessPlayerDamage();
+    }
 
 }
