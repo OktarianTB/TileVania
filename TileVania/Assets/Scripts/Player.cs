@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
 
     IEnumerator WaitUntilDamageProcess()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         gameSession.ProcessPlayerDamage();
     }
 

@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameSession : MonoBehaviour
 {
-
     int playerLives = 3;
+    int playerScore = 0;
+
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] TextMeshProUGUI livesText; 
 
     private void Awake()
     {
@@ -24,7 +28,20 @@ public class GameSession : MonoBehaviour
 
     void Start()
     {
-        
+        if(!scoreText || !livesText)
+        {
+            Debug.LogWarning("One or more of the TextMeshProUGUIs is missing");
+            return;
+        }
+
+        livesText.text = playerLives.ToString();
+        scoreText.text = playerScore.ToString();
+    }
+
+    public void AddToScore(int score)
+    {
+        playerScore += score;
+        scoreText.text = playerScore.ToString();
     }
 
     public void ProcessPlayerDamage()
@@ -36,6 +53,7 @@ public class GameSession : MonoBehaviour
         }
         else
         {
+            livesText.text = playerLives.ToString();
             int currentScene = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(currentScene);
         }
